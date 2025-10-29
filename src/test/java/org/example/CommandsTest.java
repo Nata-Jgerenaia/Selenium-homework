@@ -1,8 +1,5 @@
 package org.example;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,31 +10,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class CommandsTest {
-
-    WebDriver driver;
-    WebDriverWait wait;
-
-    @BeforeEach
-    public void setUp() {
-        driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    }
-
-    @AfterEach
-    public void tearDown() {
-        driver.quit();
-    }
-
-    @Test
-    public void testDynamicControlsAndDragAndDrop() {
-
+    public static void main(String[] args){
+        WebDriver driver = new ChromeDriver();
         driver.get("http://the-internet.herokuapp.com/dynamic_controls");
 
         WebElement enableButton = driver.findElement(By.xpath("//*[@id='input-example']/button"));
         enableButton.click();
         System.out.println("Clicked the Enable button!");
 
-        WebElement inputField = driver.findElement(By.xpath("//*[@id='input-example']/input"));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        WebElement inputField = driver.findElement(By.xpath("//*[@id=\"input-example\"]/input"));
         wait.until(ExpectedConditions.elementToBeClickable(inputField));
 
         WebElement message = driver.findElement(By.id("message"));
@@ -48,6 +31,7 @@ public class CommandsTest {
         }
 
         wait.until(ExpectedConditions.textToBePresentInElement(enableButton, "Disable"));
+
         if (enableButton.getText().equals("Disable")) {
             System.out.println("Button text changed successfully");
         }
@@ -63,11 +47,11 @@ public class CommandsTest {
 
         int yA = columnA.getLocation().getY();
         int yB = columnB.getLocation().getY();
-
         if (yA == yB) {
             System.out.println("Columns A and B aligned successfully");
         } else {
             System.out.println("Columns A and B NOT aligned!");
         }
-    }
+
+        driver.quit(); }
 }
